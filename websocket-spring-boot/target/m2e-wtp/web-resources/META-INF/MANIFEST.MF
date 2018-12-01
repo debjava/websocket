@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: websocket-spring-boot Maven Webapp
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: PIKU
+Implementation-Vendor-Id: websocket-spring-boot
+Build-Jdk: 1.8.0_91
+Implementation-URL: http://maven.apache.org
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

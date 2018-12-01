@@ -1,0 +1,7 @@
+com\itc\apti\web\controller\WebPageController.class
+com\itc\apti\entity\StatusProcessor.class
+com\itc\apti\entity\Status.class
+com\itc\apti\entity\Processor.class
+com\itc\apti\web\WebSocketConfig.class
+com\itc\apti\main\ITCAptimusSupportApp.class
+com\itc\apti\entity\IStatus.class

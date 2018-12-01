@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Digitla Marketing Microservices Health Check-up</title>
+<script src="sockjs-0.3.4.js"></script>
+<script src="stomp.js"></script>
+<script type="text/javascript">
+	var stompClient = null;
+	
+	function setConnected(connected) {
+        document.getElementById('results').innerHTML = '';
+    }
+	
+	function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+        console.log("Disconnected the socket");
+    }
+	
+	function connect() {
+    	disconnect();
+        var socket = new SockJS('/app/hello');
+        stompClient = Stomp.over(socket);            
+        stompClient.connect({}, function(frame) {
+            setConnected(true);
+            sendName();
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/greetings', function(greeting) {
+            	//showGreeting(greeting);
+                //showResults(JSON.parse(greeting.body).content);
+            	//showResults(greeting);
+            	//showResults(JSON.parse(greeting.body).name);
+            	showResults(JSON.parse(greeting.body));
+            });
+        });
+    }
+	
+	function show(message) {
+		var response = document.getElementById('results');
+		var table1 = document.createElement('table');
+		
+		table1.border = "1";
+		
+		var tr = document.createElement('tr');
+		var td1 = document.createElement('td');
+	    var td2 = document.createElement('td');
+	    
+	    var text1 = document.createTextNode(message.content);
+	    var text2 = document.createTextNode(message.name);
+	    
+	    td1.appendChild(text1);
+	    td2.appendChild(text2);
+	    tr.appendChild(td1);
+	    tr.appendChild(td2);
+
+	    table1.appendChild(tr);
+		
+	    response.appendChild(table1);
+	}
+	
+	function showResults(message) {
+		
+		show(message);
+		
+		
+        /* var response = document.getElementById('results');
+        var p = document.createElement('p');
+        p.style.wordWrap = 'break-word';
+        console.log(message);
+        p.appendChild(document.createTextNode(message.name)); */
+        
+        
+        
+        //p.appendChild(document.createTextNode(message.content));
+        /* response.appendChild(p); */
+    }
+	
+	function sendName() {
+        //var name = document.getElementById('name').value;
+        //stompClient.send("/app/hello", {}, JSON.stringify({ 'name': name }));
+        
+        stompClient.send("/app/hello", {});
+    }
+	
+	function check() {
+    	connect();
+    }
+	
+</script>
+</head>
+<body>
+	<noscript>
+		<h2 style="color: #ff0000">Seems your browser doesn't support Websocket.</h2>
+	</noscript>
+	<div>
+		<h1>Check all the micro-services of Digital Marketing</h1>
+	</div>
+	<div>
+		<button id="check" onclick="check();">Check</button>
+	</div>
+	<div>
+		<p id="results"></p>
+	</div>
+</body>
+</html>
